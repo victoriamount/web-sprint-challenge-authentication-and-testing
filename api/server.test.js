@@ -24,19 +24,19 @@ test('sanity', () => {
 describe('endpoints', () => {
   describe('[POST] /api/auth/register', () => {
     it('New user can register with valid credentials, and is returned their credentials', async () => {
-      const res = await request(server).post('/auth/register').send(Sterl)
+      const res = await request(server).post('/api/auth/register').send(Sterl)
       // console.log(res)
       expect(res.body.id).toBe(1)
       expect(res.body.username).toBe('Sterling')
       expect(res.body).toHaveProperty('password')
     })
     it('If username or password are missing, returns message "username and password required"', async () => {
-      const res = await request(server).post('/auth/register').send({ username: 'Sterling' })
+      const res = await request(server).post('/api/auth/register').send({ username: 'Sterling' })
       expect(res.body).toBe('username and password required')
     })
     it('If username is taken, returns message "username taken"', async () => {
-      await request(server).post('/auth/register').send(Sterl)
-      const res = await request(server).post('/auth/register').send(Sterl)
+      await request(server).post('/api/auth/register').send(Sterl)
+      const res = await request(server).post('/api/auth/register').send(Sterl)
       expect(res.body).toBe('username taken')
     })
   })
