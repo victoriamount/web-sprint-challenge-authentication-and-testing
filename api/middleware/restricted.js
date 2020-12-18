@@ -1,5 +1,22 @@
+const { JsonWebTokenError } = require("jsonwebtoken");
+
+const jwt = require('jsonwebtoken')
+
 module.exports = (req, res, next) => {
-  next();
+  const token = req.headers.authorization
+
+  if (!token) {
+    res.status(401).json('token required')
+  } else {
+    jwt.verify(token, 'sterling', (err, decoded) => {
+      if (err) {
+        res.status(401).json('token invalid')
+      } else {
+        req.decodedToken = decoded
+        next()
+      }
+    })
+  }
   /*
     IMPLEMENT
 
