@@ -13,8 +13,8 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.use('/api/auth', authRouter);
-server.use('/api/jokes', restrict, jokesRouter); // only logged-in users should have access!
+server.use('/auth', authRouter);
+server.use('/jokes', restrict, jokesRouter); // only logged-in users should have access!
 
 server.get("/", (req, res) => {
     res.json({ api: "up" });
